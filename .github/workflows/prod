@@ -1,0 +1,44 @@
+name: Deploy to oc_prod
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install Jekyll dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Build the site
+        run: bundle exec jekyll build
+
+      - name: Deploy _site to oc_prod repo
+        run: |
+          cd _site
+          git init
+          git config user.name "GitHub Actions"
+          git config user.email "madhuramendiss@gmail.com"
+          git remote add origin https://x-access-token:${{ secrets.OC_PROD_TOKEN }}@github.com/madhuramendis/oc_prod.git
+          git add .
+          git commit -m "Deploy from oc repo"
+          git branch -M main
+          git push --force origin main
+
+
+
+
+
