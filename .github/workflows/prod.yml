@@ -33,7 +33,7 @@ jobs:
           git init
           git config user.name "GitHub Actions"
           git config user.email "madhuramendiss@gmail.com"
-          git remote add origin https://x-access-token:${{ secrets.OC_PROD_TOKEN }}@github.com/madhuramendis/oc_prod.git
+          git remote add origin https://x-access-token:${{ secrets.OC_PROD_TOKEN }}@github.com/madhuramendis/oc-prod.git
           git add .
           git commit -m "Deploy from oc repo"
           git branch -M main
